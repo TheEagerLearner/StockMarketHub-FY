@@ -5,7 +5,7 @@ const SplashScreen = ({navigation}) => {
 
     setTimeout(()=>{
 
-        navigation.navigate("Home");
+        navigation.navigate("Register");
     
     },1500);
 
