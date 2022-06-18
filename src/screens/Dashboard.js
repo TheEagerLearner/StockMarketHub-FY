@@ -8,7 +8,7 @@ const Dashboard = ({navigation}) => {
 
         const retrieveData = async () => {
             try {
-              const value = await AsyncStorage.getItem('ticker');
+              const value = await AsyncStorage.getItem('username');
               if (value !== null) {
                 // We have data!!
                 console.log(value);
