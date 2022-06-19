@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {View,StyleSheet,TextInput,KeyboardAvoidingView} from 'react-native';
+import {View,StyleSheet,TextInput,KeyboardAvoidingView,TouchableOpacity,Text} from 'react-native';
 import Button from '../../components/Button';
 import { AsyncStorage } from 'react-native';
 
@@ -105,6 +105,15 @@ const Register = ({navigation}) => {
                         storeData();
                     }}
                 />
+                
+                <TouchableOpacity
+                    onPress={()=>{
+                        navigation.navigate('Login')
+                    }}
+                >
+                    <Text style={stylesheet.btm_text}>Already have an account? Login</Text>
+                </TouchableOpacity>
+
             </View>
         </KeyboardAvoidingView>
     );
@@ -130,6 +139,11 @@ const stylesheet = StyleSheet.create({
     btn_style:{
         marginHorizontal:12,
         marginTop:24
+    },
+    btm_text:{
+        textAlign:'center',
+        marginTop:10,
+        fontSize:16
     }
 });
 
