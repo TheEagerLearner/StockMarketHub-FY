@@ -8,14 +8,28 @@ const Dashboard = ({navigation}) => {
     const [uid,setUid] = useState('');
     const [name,setName] = useState('user');
 
-        const retrieveData = async () => {
+
+    //Retrive Auth Data and search in Realtime db using UID
+    const retrieveData = async () => {
           auth.onAuthStateChanged((user) => {
             if (user) {
-              // User is signed in, see docs for a list of available properties
-              // https://firebase.google.com/docs/reference/js/firebase.User
+        
               var uid = user.uid;
               setUid(uid);
               // ...
+              const dbRef = database.ref();
+              dbRef.child("users").child(user.uid).get().then((snapshot) => {
+                if (snapshot.exists()) {
+                  var user=snapshot.val();
+                  console.log(snapshot.val());
+                  setName(user.username);
+  
+                } else {
+                  console.log("No data available");
+                }
+              }).catch((error) => {
+                console.error(error);
+              });
             } else {
               // User is signed out
               // ...
@@ -24,26 +38,10 @@ const Dashboard = ({navigation}) => {
           });
           };
 
-          const getData = () =>{
-            const dbRef = database.ref();
-            dbRef.child("users").child(uid).get().then((snapshot) => {
-              if (snapshot.exists()) {
-                var user=snapshot.val();
-                console.log(snapshot.val());
-                setName(user.username);
-
-              } else {
-                console.log("No data available");
-              }
-            }).catch((error) => {
-              console.error(error);
-            });
-          }
 
           useEffect(()=>{
             
             retrieveData();
-            getData();
             
           },[]);
          
