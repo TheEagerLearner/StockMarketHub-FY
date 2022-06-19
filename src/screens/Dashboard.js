@@ -1,29 +1,55 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import {View,StyleSheet,Text,TextInput} from 'react-native';
 import { AsyncStorage } from 'react-native';
+import { auth, database } from '../features/Firebase/firebase';
 
 const Dashboard = ({navigation}) => {
 
-    const [ticker,setTicker] = useState('');
+    const [uid,setUid] = useState('');
+    const [name,setName] = useState('user');
 
-        const retrieveData = async () => {
-            try {
-              const value = await AsyncStorage.getItem('username');
-              if (value !== null) {
-                // We have data!!
-                console.log(value);
-                setTicker(value);
-              }
-            } catch (error) {
-              console.log(error);
+
+    //Retrive Auth Data and search in Realtime db using UID
+    const retrieveData = async () => {
+          auth.onAuthStateChanged((user) => {
+            if (user) {
+        
+              var uid = user.uid;
+              setUid(uid);
+              // ...
+              const dbRef = database.ref();
+              dbRef.child("users").child(user.uid).get().then((snapshot) => {
+                if (snapshot.exists()) {
+                  var user=snapshot.val();
+                  console.log(snapshot.val());
+                  setName(user.username);
+  
+                } else {
+                  console.log("No data available");
+                }
+              }).catch((error) => {
+                console.error(error);
+              });
+            } else {
+              // User is signed out
+              // ...
+              console.log('No user present');
             }
+          });
           };
 
-          retrieveData();
+
+          useEffect(()=>{
+            
+            retrieveData();
+            
+          },[]);
+         
+         
 
     return(
         <View style={stylesheet.container}>
-            <Text>Hello {ticker}</Text>
+            <Text>Hello {name}</Text>
         </View>
     );
 }

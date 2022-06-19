@@ -2,19 +2,37 @@ import React, { useEffect, useState } from 'react';
 import {View,StyleSheet,TextInput,KeyboardAvoidingView,TouchableOpacity,Text} from 'react-native';
 import Button from '../../components/Button';
 import { AsyncStorage } from 'react-native';
-import { auth } from '../../features/Firebase/firebase';
+import { auth, database } from '../../features/Firebase/firebase';
 
 const Register = ({navigation}) => {
 
+
+
+    const [uid, setUserid] = useState('');
     const [name,setName] = useState('');
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
 
-    const RegisterUser = () => {
+
+    //Realtime dB - Write
+    const writeUserData = (userId, name, email,wishlist) => {
+        database.ref('users/' + userId).set({
+          username: name,
+          email: email,
+          wishlist:wishlist
+        });
+      }
+
+
+    //registers new users
+    const RegisterUser =  () => {
         auth.createUserWithEmailAndPassword(email,password)
             .then((userCred)=>{
                 var user = userCred.user;
-                console.log(user);
+                
+                writeUserData(user.uid,name,email,['IDEA.NS','TATA.NS','RELIANCE.NS']);
+                
+                setLoggedIn();
                 navigation.navigate('Dashboard');
             })
             .catch((error)=>{
@@ -24,53 +42,24 @@ const Register = ({navigation}) => {
             });
     }
     
-    const checkLoggedIn = async () => {
-        try {
-            const value = await AsyncStorage.getItem('loggedIn');
-            if(value!=null){
-                console.log(value);    
-                if (value.localeCompare('true')===0){
-                    navigation.navigate('Dashboard');
-                }
-            }
-        }
-            catch(error){
-                console.log(`err1=>${error}`);
-            }
-
-        }
-
-    useEffect(()=>{
-        checkLoggedIn();
-    },[]);
 
 
+
+
+    //sets the logedin flag to True
     const setLoggedIn = async () => {
         try{await AsyncStorage.setItem(
             'loggedIn',
-            true
+            'true'
             )
+          
         }
         catch(error){
             console.log(`err2=>${error}`);
             
         }
     }
-        
 
-    const storeData = async () => {
-        try {
-          await AsyncStorage.setItem(
-            'username',
-            name
-          );
-          setLoggedIn();
-          RegisterUser();
-        } catch (error) {
-            console.log(`err3=>${error}`);
-            
-        }
-      };
 
 
   
@@ -117,7 +106,7 @@ const Register = ({navigation}) => {
                         console.log(password);
                         console.log('Storing data ...');
                         
-                        storeData();
+                        RegisterUser();
                     }}
                 />
                 
