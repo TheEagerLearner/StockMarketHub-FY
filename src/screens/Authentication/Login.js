@@ -6,15 +6,18 @@ import { AsyncStorage } from 'react-native';
 
 const Login = ({navigation}) => {
 
+    const [uid,setUserid] = useState('');
     const [name,setName] = useState('');
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
 
-    //Sign in User
-    const loginUser = () =>{
+    //logs in users
+    const loginUser =  () =>{
         auth.signInWithEmailAndPassword(email,password)
             .then((userCred)=>{
                 var user = userCred.user;
+                setUserid(user.uid);
+                setLoggedIn();
                 navigation.navigate('Dashboard');
             })
             .catch((error)=>{
@@ -22,63 +25,23 @@ const Login = ({navigation}) => {
             });
     }
     
-    //check if user is logged in 
-    const checkLoggedIn = async () => {
-        try {
-            const value = await AsyncStorage.getItem('loggedIn');
-            if(value!=null){
-                console.log(value);    
-                if (value.localeCompare('true')===0){
-                    navigation.navigate('Dashboard');
-                }
-            }
-        }
-            catch(error){
-                console.log(`err1=>${error}`);
-            }
 
-        }
-
-    
-    //calls funtion to check if user is logged in
-    useEffect(()=>{
-        checkLoggedIn();
-    },[]);
-
-
-    //sets the user logged in key as true
-    const setLoggedIn = async () => {
-        try{await AsyncStorage.setItem(
-            'loggedIn',
-            true
+        //sets the user loggedin flag as true
+        const setLoggedIn = async () => {
+            try{await AsyncStorage.setItem(
+                'loggedIn',
+                'true'
             )
+            
         }
         catch(error){
             console.log(`err2=>${error}`);
             
         }
     }
-        
-
-    //stores user data
-    const storeData = async () => {
-        try {
-          await AsyncStorage.setItem(
-            'username',
-            'Sam'
-          );
-          setLoggedIn();
-          loginUser();
-        } catch (error) {
-            console.log(`err3=>${error}`);
-            
-        }
-      };
-
-
-  
-
-    return(
+    
+    
+        return(
         <KeyboardAvoidingView style={stylesheet.container}>
             <View style={stylesheet.inside_container}>
                 
@@ -114,7 +77,7 @@ const Login = ({navigation}) => {
                         console.log(password);
                         console.log('Storing data ...');
                         
-                        storeData();
+                        loginUser();
                     }}
                 />
 
