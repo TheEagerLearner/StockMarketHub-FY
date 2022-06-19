@@ -2,12 +2,27 @@ import React, { useEffect, useState } from 'react';
 import {View,StyleSheet,TextInput,KeyboardAvoidingView,TouchableOpacity,Text} from 'react-native';
 import Button from '../../components/Button';
 import { AsyncStorage } from 'react-native';
+import { auth } from '../../features/Firebase/firebase';
 
 const Register = ({navigation}) => {
 
     const [name,setName] = useState('');
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
+
+    const RegisterUser = () => {
+        auth.createUserWithEmailAndPassword(email,password)
+            .then((userCred)=>{
+                var user = userCred.user;
+                console.log(user);
+                navigation.navigate('Dashboard');
+            })
+            .catch((error)=>{
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.log(errorMessage);
+            });
+    }
     
     const checkLoggedIn = async () => {
         try {
@@ -50,7 +65,7 @@ const Register = ({navigation}) => {
             name
           );
           setLoggedIn();
-          navigation.navigate('Dashboard');
+          RegisterUser();
         } catch (error) {
             console.log(`err3=>${error}`);
             
