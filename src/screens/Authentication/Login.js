@@ -1,12 +1,28 @@
-import React from 'react';
-import {View,StyleSheet,Text} from 'react-native';
+import React,{useState,useEffect} from 'react';
+import {View,StyleSheet,Text,TouchableOpacity,KeyboardAvoidingView,TextInput} from 'react-native';
+import Button from '../../components/Button';
+import { auth } from '../../features/Firebase/firebase';
+import { AsyncStorage } from 'react-native';
 
 const Login = ({navigation}) => {
 
     const [name,setName] = useState('');
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
+
+    //Sign in User
+    const loginUser = () =>{
+        auth.signInWithEmailAndPassword(email,password)
+            .then((userCred)=>{
+                var user = userCred.user;
+                navigation.navigate('Dashboard');
+            })
+            .catch((error)=>{
+                console.log(error.message);
+            });
+    }
     
+    //check if user is logged in 
     const checkLoggedIn = async () => {
         try {
             const value = await AsyncStorage.getItem('loggedIn');
@@ -23,11 +39,14 @@ const Login = ({navigation}) => {
 
         }
 
+    
+    //calls funtion to check if user is logged in
     useEffect(()=>{
         checkLoggedIn();
     },[]);
 
 
+    //sets the user logged in key as true
     const setLoggedIn = async () => {
         try{await AsyncStorage.setItem(
             'loggedIn',
@@ -41,6 +60,7 @@ const Login = ({navigation}) => {
     }
         
 
+    //stores user data
     const storeData = async () => {
         try {
           await AsyncStorage.setItem(
@@ -48,7 +68,7 @@ const Login = ({navigation}) => {
             'Sam'
           );
           setLoggedIn();
-          navigation.navigate('Dashboard');
+          loginUser();
         } catch (error) {
             console.log(`err3=>${error}`);
             
@@ -97,6 +117,15 @@ const Login = ({navigation}) => {
                         storeData();
                     }}
                 />
+
+                <TouchableOpacity
+                    onPress={()=>{
+                        navigation.navigate('Register')
+                    }}
+                >
+                    <Text style={stylesheet.btm_text}>Don't have an account? Register</Text>
+                </TouchableOpacity>
+                
             </View>
         </KeyboardAvoidingView>
     );
@@ -122,6 +151,11 @@ const stylesheet = StyleSheet.create({
     btn_style:{
         marginHorizontal:12,
         marginTop:24
+    },
+    btm_text:{
+        textAlign:'center',
+        marginTop:10,
+        fontSize:16
     }
 });
 
