@@ -1,51 +1,39 @@
-import React,{useState} from 'react';
-import {View,StyleSheet,Text,TextInput} from 'react-native';
-import { AsyncStorage } from 'react-native';
+import * as React from 'react';
+import { Text, View,StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-const Home = ({navigation}) => {
+import News from './Home-Screens/News';
+import Analysis from './Home-Screens/Analysis';
 
-    const [ticker,setTicker] = useState('');
 
-    const storeData = async () => {
-        try {
-          await AsyncStorage.setItem(
-            'ticker',
-            ticker
-          );
-          navigation.navigate('Dashboard');
-        } catch (error) {
-          console.log(error);
-        }
-      };
+const Tab = createMaterialTopTabNavigator();
 
-    return(
-        <View style={stylesheet.container}>
-            <Text>Home</Text>
-            <TextInput 
-                placeholder='Enter ticker name'
-                style={stylesheet.textinput}
-                value={ticker}
-                onChangeText={(text)=>{setTicker(text);}}
-                onEndEditing={()=>{
-                    storeData();
-                    
-                }}
-            />
-        </View>
-    );
+export default function Home() {
+  return (
+    <View style={stylesheet.container}>
+
+    <NavigationContainer independent={true}>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarLabelStyle: { fontSize: 18 },
+          
+          tabBarStyle: { backgroundColor:'#FFF'},
+        }}
+      >
+        <Tab.Screen name="Analysis" component={Analysis} />
+        <Tab.Screen name="News" component={News} />
+      </Tab.Navigator>
+    </NavigationContainer>
+    </View>
+  );
 }
 
 const stylesheet = StyleSheet.create({
-    container:{
-        flex:1,
-        justifyContent:'center',
-        alignItems:'center'
-    },
-    textinput:{
-        borderWidth:1,
-        padding:10,
-        width:'80%'
-    }
+  container:{
+    flex:1,
+    paddingTop:20,
+    backgroundColor:'#FFF'
+  
+  }
 });
-
-export default Home;

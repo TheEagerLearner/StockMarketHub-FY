@@ -1,13 +1,32 @@
 import React,{useEffect, useState} from 'react';
-import {View,StyleSheet,Text,TextInput} from 'react-native';
+import {View,StyleSheet,Text,ToastAndroid, Linking} from 'react-native';
 import { AsyncStorage } from 'react-native';
+import SearchBar from '../components/SearchBar';
 import { auth, database } from '../features/Firebase/firebase';
+import StockApi from '../features/StockApi/StockApi';
+
 
 const Dashboard = ({navigation}) => {
 
     const [uid,setUid] = useState('');
     const [name,setName] = useState('user');
+    const [ticker,setTicker] = useState('');
 
+
+  const checkTicker = async () => {
+      try{
+        const response = await StockApi.get(`/stock/${ticker}`);
+        let data = response.data;
+        console.log(data);
+        navigation.navigate('Home');
+      }
+      catch(err){
+        
+        console.log(err.message);
+        ToastAndroid.show(err.code+'\n'+err.message,4000);
+
+      }
+  };
 
     //Retrive Auth Data and search in Realtime db using UID
     const retrieveData = async () => {
@@ -49,7 +68,23 @@ const Dashboard = ({navigation}) => {
 
     return(
         <View style={stylesheet.container}>
-            <Text>Hello {name}</Text>
+              <Text style={stylesheet.greeting_text_one}>Hello👋</Text>
+              <Text style={stylesheet.greeting_text_two}>{name}</Text>
+          
+          <SearchBar 
+              onChangeText={(value)=>{
+                  setTicker(value);
+                  console.log(ticker);
+              }}
+
+              onEndEditing={()=>{
+                console.log(`ticker is ${ticker}`);
+                Linking.openURL('https://google.com');
+                checkTicker();
+                
+                
+              }}
+          />
         </View>
     );
 }
@@ -57,8 +92,19 @@ const Dashboard = ({navigation}) => {
 const stylesheet = StyleSheet.create({
     container:{
         flex:1,
-        justifyContent:'center',
-        alignItems:'center'
+    },
+    greeting_text_one:{
+      marginTop:50,
+      marginLeft:10,
+      fontSize:50,
+      fontWeight:'bold',
+      fontFamily:'sans-serif'
+    },
+    greeting_text_two:{
+      marginLeft:10,
+      fontSize:32,
+      fontWeight:'bold',
+      fontFamily:'sans-serif'
     }
 });
 
