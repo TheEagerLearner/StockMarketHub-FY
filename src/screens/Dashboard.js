@@ -1,9 +1,15 @@
 import React,{useEffect, useState} from 'react';
 import {View,StyleSheet,Text,ToastAndroid, Linking} from 'react-native';
 import { AsyncStorage } from 'react-native';
+import DashIcons from '../components/DashIcons';
 import SearchBar from '../components/SearchBar';
 import { auth, database } from '../features/Firebase/firebase';
 import StockApi from '../features/StockApi/StockApi';
+
+//icons
+import { Entypo } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 
 const Dashboard = ({navigation}) => {
@@ -15,9 +21,8 @@ const Dashboard = ({navigation}) => {
 
   const checkTicker = async () => {
       try{
-        const response = await StockApi.get(`/stock/${ticker}`);
-        let data = response.data;
-        console.log(data);
+        const response = await StockApi.get(`/stock/${ticker}`);  
+        storeTicker();
         navigation.navigate('Home');
       }
       catch(err){
@@ -27,6 +32,24 @@ const Dashboard = ({navigation}) => {
 
       }
   };
+
+  //store ticker
+  const storeTicker = async () => {
+
+    try{
+
+      await AsyncStorage.setItem(
+        'ticker',
+        ticker
+      );
+
+    }
+    catch(err){
+      console.log(err.title);
+      console.log(err.message);
+    }
+  }
+
 
     //Retrive Auth Data and search in Realtime db using UID
     const retrieveData = async () => {
@@ -74,17 +97,35 @@ const Dashboard = ({navigation}) => {
           <SearchBar 
               onChangeText={(value)=>{
                   setTicker(value);
-                  console.log(ticker);
+                  
               }}
 
               onEndEditing={()=>{
                 console.log(`ticker is ${ticker}`);
-                Linking.openURL('https://google.com');
+                //Linking.openURL('https://google.com');
                 checkTicker();
                 
                 
               }}
           />
+
+          <View style={stylesheet.icons_style}>
+
+
+            <DashIcons 
+              child={<MaterialCommunityIcons name="view-list" size={40} color="black" />}
+              title={'Wishlist'}
+            />
+            <DashIcons 
+              child={<MaterialCommunityIcons name="human-greeting-variant" size={34} color="black" />}
+              title={'Profile'}
+            />
+            <DashIcons 
+              child={<AntDesign name="infocirlce" size={34} color="black" />}
+              title={'About'}
+            />
+            
+          </View>
         </View>
     );
 }
@@ -105,7 +146,15 @@ const stylesheet = StyleSheet.create({
       fontSize:32,
       fontWeight:'bold',
       fontFamily:'sans-serif'
+    },
+    icons_style:{
+      flexDirection:'row',
+      justifyContent:'space-between',
+      margin:10,
+      marginTop:30,
+      marginHorizontal:30
     }
+
 });
 
 export default Dashboard;
