@@ -11,7 +11,7 @@ const Analysis = ({navigation}) => {
         try{
             const response = await StockApi.get(`/stock/${res}/`);
             const data = response.data;
-            console.log(data);
+            console.log(data[0]); //gets all the stock historical data from the start date
 
         }
         catch(err){

@@ -1,12 +1,15 @@
 import * as React from 'react';
-import { Text, View,StyleSheet, AsyncStorage } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { Text, View,StyleSheet, AsyncStorage,FlatList } from 'react-native';
 import StockApi from '../../features/StockApi/StockApi';
+import NewsCard from '../../components/NewsCard';
 
 const News = ({navigation}) => {
 
     const [ticker,setTicker] = React.useState('');
+    const [data,setData] = React.useState({
+      'Summaries':['Hello Saurabh'],
+      'Links':['www.google.com']
+    });
   
     //used to get Ticker news
     const getStockNews = async (res) => {
@@ -15,7 +18,8 @@ const News = ({navigation}) => {
         
         const response = await StockApi.get(`/news/${res}`);
         const data = response.data;
-        console.log(data);
+        setData(data);
+        
 
       }
       catch(err){
@@ -31,6 +35,7 @@ const News = ({navigation}) => {
           const response = await AsyncStorage.getItem('ticker');
           getStockNews(response);
           setTicker(response);
+          console.log(data);
           
       }
       catch(err){
@@ -50,7 +55,17 @@ const News = ({navigation}) => {
     return(
     <View style={stylesheet.container}>
 
-      <Text>News zai mare ?</Text>
+      <FlatList 
+          keyExtractor={item=>item.key}
+          data={data.Summaries}
+          renderItem={({item})=>{
+            return(
+            <NewsCard 
+              news={item}
+            />
+            );
+          }}
+      />
 
     </View>
   );
@@ -59,8 +74,7 @@ const News = ({navigation}) => {
 const stylesheet = StyleSheet.create({
   container:{
     flex:1,
-    justifyContent:'center',
-    alignItems:'center'
+    
   
   }
 });
