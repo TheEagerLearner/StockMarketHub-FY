@@ -115,14 +115,17 @@ const Dashboard = ({navigation}) => {
             <DashIcons 
               child={<MaterialCommunityIcons name="view-list" size={40} color="black" />}
               title={'Wishlist'}
+              onPress={()=>{navigation.navigate('Wishlist')}}
             />
             <DashIcons 
               child={<MaterialCommunityIcons name="human-greeting-variant" size={34} color="black" />}
               title={'Profile'}
+              onPress={()=>{navigation.navigate('Profile')}}
             />
             <DashIcons 
               child={<AntDesign name="infocirlce" size={34} color="black" />}
               title={'About'}
+              onPress={()=>{navigation.navigate('About')}}
             />
             
           </View>
