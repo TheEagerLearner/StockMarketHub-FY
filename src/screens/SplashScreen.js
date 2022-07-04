@@ -9,7 +9,7 @@ const SplashScreen = ({navigation}) => {
     console.log("Hello There");
     const checkLoggedIn = async () => {
         try {
-            await AsyncStorage.setItem('loggedIn','false');
+            //await AsyncStorage.setItem('loggedIn','false');
             const value = await AsyncStorage.getItem('loggedIn');
             if(value!=null){
                 console.log(`splash screen value => ${value}`);    
