@@ -17,7 +17,11 @@ const Analysis = ({navigation}) => {
 
     var newData = [];
     const [ticker,setTicker] = useState('');
-       
+   
+
+
+
+    
     const screenWidth = Dimensions.get("window").width;
 
     const arrangeData = (data) => {
@@ -96,7 +100,21 @@ const Analysis = ({navigation}) => {
     return(
         <View style={stylesheet.container}>
             <LineChart
-                data={newData}
+                data={{
+      labels: ["January", "February", "March", "April", "May", "June"],
+      datasets: [
+        {
+          data: [
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100
+          ]
+        }
+      ]
+    }}
                 width={screenWidth}
                 height={220}
                 chartConfig={chartConfig}
