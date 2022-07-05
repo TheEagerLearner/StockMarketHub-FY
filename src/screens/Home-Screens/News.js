@@ -1,15 +1,16 @@
 import * as React from 'react';
-import { Text, View,StyleSheet, AsyncStorage,FlatList } from 'react-native';
+import { Text, View,StyleSheet, AsyncStorage,FlatList,Linking } from 'react-native';
 import StockApi from '../../features/StockApi/StockApi';
 import NewsCard from '../../components/NewsCard';
 
 const News = ({navigation}) => {
 
     const [ticker,setTicker] = React.useState('');
-    const [data,setData] = React.useState({
-      'Summaries':['Hello Saurabh'],
-      'Links':['www.google.com']
-    });
+    const [data,setData] = React.useState([
+      {
+        "Summaries": "Summary",
+        "Links":"Links"
+      }]);
   
     //used to get Ticker news
     const getStockNews = async (res) => {
@@ -57,11 +58,14 @@ const News = ({navigation}) => {
 
       <FlatList 
           keyExtractor={item=>item.key}
-          data={data.Summaries}
+          data={data}
           renderItem={({item})=>{
             return(
             <NewsCard 
-              news={item}
+              news={item.Summaries}
+              onPress={()=>{
+                Linking.openURL(item.Links);
+              }}
             />
             );
           }}
