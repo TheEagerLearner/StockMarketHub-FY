@@ -6,7 +6,6 @@ import { AsyncStorage } from 'react-native';
 const SplashScreen = ({navigation}) => {
     
     //checks if user has logged in before
-    console.log("Hello There");
     const checkLoggedIn = async () => {
         try {
             //await AsyncStorage.setItem('loggedIn','false');
