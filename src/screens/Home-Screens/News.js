@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View,StyleSheet, AsyncStorage,FlatList,Linking } from 'react-native';
+import { Text, View,StyleSheet, AsyncStorage,FlatList,Linking, ToastAndroid } from 'react-native';
 import StockApi from '../../features/StockApi/StockApi';
 import NewsCard from '../../components/NewsCard';
 
@@ -11,6 +11,7 @@ const News = ({navigation}) => {
         "Summaries": "Summary",
         "Links":"Links"
       }]);
+    const [len,setLen] = React.useState(true);
   
     //used to get Ticker news
     const getStockNews = async (res) => {
@@ -20,7 +21,11 @@ const News = ({navigation}) => {
         const response = await StockApi.get(`/news/${res}`);
         const data = response.data;
         setData(data);
+        if(data.length==0){
+          
+        setLen(false);
         
+        }
 
       }
       catch(err){
@@ -50,12 +55,16 @@ const News = ({navigation}) => {
     React.useEffect(()=>{
         console.log("NEWs");
         getTicker();
-    },[]);
+        if(!len){
+          ToastAndroid.show("No News available at the current moment",4000);
+        }
+    },[len]);
   
   
     return(
     <View style={stylesheet.container}>
 
+{len?
       <FlatList 
           keyExtractor={item=>item.Summaries}
           data={data}
@@ -70,7 +79,15 @@ const News = ({navigation}) => {
             );
           }}
       />
-
+      :
+      <Text 
+        style={{
+          position:'absolute',
+          alignSelf:'center',
+          textAlign:'center'
+        }}
+      >No News available for this stock</Text>
+}
     </View>
   );
 }
