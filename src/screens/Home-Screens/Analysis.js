@@ -3,20 +3,13 @@ import { View,StyleSheet,Text, AsyncStorage,Dimensions,ScrollView  } from 'react
 import StockApi from '../../features/StockApi/StockApi';
 
 
+
 import {
-    LineChart,
-    BarChart,
-    PieChart,
-    ProgressChart,
-    ContributionGraph,
-    StackedBarChart
+    LineChart
   } from "react-native-chart-kit";
 
 
 const Analysis = ({navigation}) => {
-
-
-
 
 
     var newData = [];
@@ -66,7 +59,7 @@ const Analysis = ({navigation}) => {
 
    
     const screenWidth = Dimensions.get("window").width;
-
+    
 
 
     const getPred = async (res) => {

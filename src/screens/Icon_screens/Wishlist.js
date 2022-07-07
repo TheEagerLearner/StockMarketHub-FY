@@ -20,11 +20,11 @@ const Wishlist = ({navigation}) => {
     try{
         const newsPred =  (await StockApi.get(`/predict/senti/${res}`)).data.Prediction;
         
-        if(newsPred.localeCompare('buy')){
-            return(true);
+        if(newsPred.localeCompare('BUY')){
+          return(true);
         }
         else{
-            return(false);
+          return(false);        
         }
 
     }
@@ -101,6 +101,9 @@ const Wishlist = ({navigation}) => {
                 data = {wishlist}
                 renderItem = {({item})=>{
 
+                    const buy = getPred(item)
+                    console.log(buy);
+
                     return(
                         <WishCard 
                             onPress={()=>{
@@ -109,7 +112,7 @@ const Wishlist = ({navigation}) => {
                                 navigation.navigate('Home');
                             }}
                             name={item}
-                            buy={getPred(item)}
+                            buy={buy}
                         />
                     );
 
