@@ -36,7 +36,7 @@ const News = ({navigation}) => {
           const response = await AsyncStorage.getItem('ticker');
           getStockNews(response);
           setTicker(response);
-          console.log(data);
+          //console.log(data);
           
       }
       catch(err){
@@ -57,7 +57,7 @@ const News = ({navigation}) => {
     <View style={stylesheet.container}>
 
       <FlatList 
-          keyExtractor={item=>item.key}
+          keyExtractor={item=>item.Summaries}
           data={data}
           renderItem={({item})=>{
             return(
