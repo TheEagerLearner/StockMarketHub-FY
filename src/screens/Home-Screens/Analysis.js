@@ -2,6 +2,7 @@ import React, { Profiler, useEffect, useState } from 'react';
 import { View,StyleSheet,Text, AsyncStorage,Dimensions,ScrollView  } from 'react-native';
 import StockApi from '../../features/StockApi/StockApi';
 
+
 import {
     LineChart,
     BarChart,
@@ -13,6 +14,9 @@ import {
 
 
 const Analysis = ({navigation}) => {
+
+
+
 
 
     var newData = [];
@@ -59,8 +63,10 @@ const Analysis = ({navigation}) => {
     }
 });
 
-    
+
+   
     const screenWidth = Dimensions.get("window").width;
+
 
 
     const getPred = async (res) => {
