@@ -1,8 +1,10 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet,AsyncStorage } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import {Card} from 'react-native-shadow-cards';
+import { auth,database } from '../../features/Firebase/firebase';
+import Button from '../../components/Button';
 
-const Profile = ({name, userName}) => {
+const Profile = ({navigation}) => {
 
   const quotes = [
     " An investment in knowledge pays the best interest. — Benjamin Franklin ",
@@ -25,33 +27,86 @@ const Profile = ({name, userName}) => {
 ]
 
   const [quote, setQuote] = useState( "In investing, what is comfortable is rarely profitable. — Robert Arnott");
+  const [name,setName] = useState('');
+  const [email,setEmail] = useState('');
+
+  const retrieveData = async () => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+  
+        var uid = user.uid;
+        //setUid(uid);
+        // ...
+        const dbRef = database.ref();
+        dbRef.child("users").child(user.uid).get().then((snapshot) => {
+          if (snapshot.exists()) {
+            var user=snapshot.val();
+            console.log(snapshot.val());
+            setName(user.username);
+            setEmail(user.email);
+
+          } else {
+            console.log("No data available");
+          }
+        }).catch((error) => {
+          console.error(error);
+        });
+      } else {
+        // User is signed out
+        // ...
+        console.log('No user present');
+      }
+    });
+    };
+
+    const logout = async () => {
+      try{
+        await AsyncStorage.setItem('loggedIn','false');
+        navigation.navigate('Register');
+      }
+      catch(err){
+        console.log("hmmmmmmm =====> "+err);
+      }
+    }
+
+    retrieveData();
+    
+    useEffect(() => {
+      const interval = setInterval(() => {
+      const random = Math.floor(Math.random() * 16)
+      setQuote(quotes[random])
+      }, 10000);
+      return () => clearInterval(interval)
+  }, [setQuote])
+
 
   return (
     
     <View style={style.container}>
       <Text style={style.txtProfile}>Profile 🙋‍♂️</Text>
       <View style={style.view1}>
-        <TouchableOpacity style={style.button}>
-          <Text style={style.buttontext}>Log Out</Text>
-        </TouchableOpacity>
-        <View>
+
+        <View style={{
+          width:'100%'
+        }}>
           <Text style={style.name}>{`Name ${name}`}</Text>
-          <Text style={style.name}>{`UserName ${userName}`}</Text>
+          <Text style={style.name}>{`Email ${email}`}</Text>
+          
+      <Button 
+        style={{
+          marginTop:100
+        }}
+        title={"logout"}
+        onPress={()=>{
+          logout();
+        }}
+      />
         </View>
         <View style={style.quoteBg}>
-          {
-            useEffect(() => {
-                const interval = setInterval(() => {
-                const random = Math.floor(Math.random() * 16)
-                setQuote(quotes[random])
-                }, 10000);
-                return () => clearInterval(interval)
-            }, [setQuote])
-          }
+          
+
           <Text style={style.headQuote}>Quote for the Day :</Text>
-          <Card style={{padding: 4, backgroundColor: "#EAF6F6"}}>
             <Text style={style.txtQuote}>{quote}</Text>
-          </Card>
           
         </View>
       </View>
@@ -66,10 +121,10 @@ const style = StyleSheet.create({
         flexDirection: "column",
     },
     txtProfile: {
-      fontSize: 40,
+      fontSize: 32,
       fontWeight: "bold",
       letterSpacing: 4,
-      padding: 10
+      marginTop:30
     },
     view1: {
       alignItems: "center",
@@ -93,30 +148,29 @@ const style = StyleSheet.create({
        fontSize: 25  
     },
     name: {
-      marginTop: 50,
-      fontSize: 40,
-      borderWidth: 2,
+      marginTop: 10,
+      fontSize: 26,
+      //borderWidth: 2,
       padding: 10,
       borderRadius: 8,
-      textAlign: "center",
+      
     },
     quoteBg: { 
       position: "absolute",
-      bottom: 200,
-      borderWidth: 2,
-      paddingLeft: 5,
-      paddingRight: 5,
-      paddingBottom: 10,
+      bottom: 100,
       margin: 10,
       borderTopLeftRadius: 25,
       borderBottomRightRadius: 25,
+      width:'100%',
+      elevation:2,
+      padding:10
     },
     txtQuote: {
-      fontSize: 27,
+      fontSize: 20,
       fontWeight: "400"
     },
     headQuote: {
-      fontSize: 30,
+      fontSize: 22,
       fontWeight: "500",
       paddingTop: 10,
       paddingBottom: 5, 

@@ -20,21 +20,7 @@ const WishCard = ({name,open,current,buy,onPress}) =>{
             onPress={onPress}
         >
             <Text style={stylesheet.nameStyle}>{name}</Text>
-            <View style={{
-                borderWidth:0,
-                position:'absolute',
-                right:10,
-                top:15,
-                paddingHorizontal:8,
-                paddingVertical:4,
-                borderRadius:10,
-                backgroundColor:buy?'#32c641':'#e93c31',
-            }}>
-                <Text
-                    style={{fontWeight:'bold',color:'white'}}
-                >{buy?'BUY':'SELL'}
-                </Text>
-            </View>
+
 
           
         
@@ -59,7 +45,7 @@ const stylesheet = StyleSheet.create({
         shadowOpacity: 0,
         shadowRadius: 0,
         elevation: 24,
-        width:'90%',
+        width:'95%',
     },
     nameStyle:{
         marginLeft:15,
