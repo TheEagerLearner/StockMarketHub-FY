@@ -20,6 +20,9 @@ const SplashScreen = ({navigation}) => {
                    navigation.navigate('Register');
                 }
             }
+            else{
+                navigation.navigate('Register');
+            }
         }
             catch(error){
                 console.log(`err1=>${error}`);

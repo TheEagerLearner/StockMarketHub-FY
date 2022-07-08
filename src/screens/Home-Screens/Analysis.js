@@ -2,13 +2,10 @@ import React, { Profiler, useEffect, useState } from 'react';
 import { View,StyleSheet,Text, AsyncStorage,Dimensions,ScrollView  } from 'react-native';
 import StockApi from '../../features/StockApi/StockApi';
 
+
+
 import {
-    LineChart,
-    BarChart,
-    PieChart,
-    ProgressChart,
-    ContributionGraph,
-    StackedBarChart
+    LineChart
   } from "react-native-chart-kit";
 
 
@@ -59,8 +56,10 @@ const Analysis = ({navigation}) => {
     }
 });
 
-    
+
+   
     const screenWidth = Dimensions.get("window").width;
+    
 
 
     const getPred = async (res) => {

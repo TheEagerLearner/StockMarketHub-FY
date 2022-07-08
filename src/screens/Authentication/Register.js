@@ -15,7 +15,7 @@ const Register = ({navigation}) => {
 
 
     //Realtime dB - Write
-    const writeUserData = (userId, name, email,wishlist) => {
+    const writeUserData = (userId, name, email,[]) => {
         database.ref('users/' + userId).set({
           username: name,
           email: email,
