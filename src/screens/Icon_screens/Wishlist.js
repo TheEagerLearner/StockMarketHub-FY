@@ -91,7 +91,7 @@ const Wishlist = ({navigation}) => {
 
     return(
         <View style={stylesheet.container}>
-
+      <Text style={stylesheet.text}>Wishlist</Text>
             <FlatList 
                 style={{
                     width:'100%',
@@ -128,7 +128,15 @@ const stylesheet = StyleSheet.create({
         flex:1,
         alignItems:'center'
 
-    }
+    },
+    text: {
+      fontSize: 40,
+      fontWeight: "bold",
+      color: "#1B2430",
+      letterSpacing: 2,
+      marginLeft: 20,
+      marginTop:20
+  },
 });
 
 export default Wishlist;

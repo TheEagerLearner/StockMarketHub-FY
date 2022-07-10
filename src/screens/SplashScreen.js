@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,StyleSheet,Text} from 'react-native';
+import {View,StyleSheet,Text,Image } from 'react-native';
 import { AsyncStorage } from 'react-native';
 
 
@@ -38,7 +38,34 @@ const SplashScreen = ({navigation}) => {
 
     return(
         <View style={stylesheet.container}>
-            <Text>Splash Screen</Text>
+            <Text
+                style={{
+                    marginLeft:20,
+                    marginTop:60,
+                    fontWeight:'bold',
+                    fontSize:52,
+                    letterSpacing:4
+                }}
+            >Stock Market Hub</Text>
+            <Image 
+                style={{
+
+                    alignSelf:'center',
+                    marginTop:40
+                    
+                }}
+                source={require('./../../assets/lol.png')} />
+
+                <Text
+                style={{
+                    marginLeft:20,
+                    marginTop:30,
+                    fontSize:32,
+                }}
+                >
+                Get all information about your stock portfolio at your fingertips
+
+                </Text>
         </View>
     );
 }
@@ -46,8 +73,8 @@ const SplashScreen = ({navigation}) => {
 const stylesheet = StyleSheet.create({
     container:{
         flex:1,
-        justifyContent:'center',
-        alignItems:'center'
+        backgroundColor:'#fff',
+
     }
 });
 

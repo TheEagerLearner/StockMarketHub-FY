@@ -33,12 +33,17 @@ export default function Home() {
     });
 }
 
+        const getData = async (wishlist) => {
+          const name = await AsyncStorage.getItem('name');
+          const email = await AsyncStorage.getItem('email');
+          writeUserData(uid,name,email,wishlist);
+        }
 
         const writeUserData = (userId, name, email,wishlist) => {
           database.ref('users/' + userId).set({
-            username: name,
-            email: email,
-            wishlist:wishlist
+            'wishlist':wishlist,
+            'email':email,
+            'username':name
           });
           console.log({
             username: name,
@@ -60,7 +65,9 @@ export default function Home() {
                 if (snapshot.exists()) {
                   var user=snapshot.val();
                   console.log(snapshot.val());
-                  const wishlist = user.wishlist;
+                  var wishlist = user.wishlist;
+                  var username = user.username;
+                  var email = user.email;
                   setInWish(wishlist.includes(res.toUpperCase()));
                   console.log(wishlist);
                   //console.log(wishlist.includes(res.toUpperCase()));
@@ -117,12 +124,12 @@ export default function Home() {
         onPress={()=>{
           console.log("Tapped on Wishlist");
           if(inWish){
-            writeUserData(uid,name,email,arrayRemove(wishlist,ticker));
+            getData(arrayRemove(wishlist,ticker));
             setInWish(false);
           }
           else{
             
-            writeUserData(uid,name,email,[...wishlist,ticker]);
+            getData([...wishlist,ticker]);
             setInWish(true);
           }
 

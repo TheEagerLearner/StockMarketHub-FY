@@ -35,20 +35,22 @@ const style = StyleSheet.create({
         margin: 10,
     },
     text: {
-        fontSize: 50,
+        fontSize: 40,
         fontWeight: "bold",
         color: "#1B2430",
         letterSpacing: 2,
-        marginLeft: 20
+        marginLeft: 20,
+        marginTop:18
     },
     info: {
     },
     text2: {
-        fontSize: 25,
+        fontSize: 20,
         color: "black",
         padding: 10,
         opacity: 1,
         fontWeight: "400",
+        textAlign:'justify'
     }
 })
 
