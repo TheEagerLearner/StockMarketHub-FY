@@ -30,7 +30,7 @@ const stylesheet = StyleSheet.create({
     },
     title_style:{
         fontWeight:'bold',
-        marginTop:4
+        marginTop:4,
     }
 });
 

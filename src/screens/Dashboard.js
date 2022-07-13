@@ -51,7 +51,7 @@ const Dashboard = ({navigation}) => {
       catch(err){
         
         console.log(err.message);
-        ToastAndroid.show(err.code+'\n'+err.message,4000);
+        ToastAndroid.show('Stock ticker does not exist',4000);
 
       }
   };
@@ -209,7 +209,8 @@ const stylesheet = StyleSheet.create({
       justifyContent:'space-between',
       margin:10,
       marginTop:30,
-      marginHorizontal:30
+      marginHorizontal:30,
+      elevation:4
     },
     quoteBg: { 
       position: "absolute",
@@ -218,9 +219,10 @@ const stylesheet = StyleSheet.create({
       borderTopLeftRadius: 25,
       borderBottomRightRadius: 25,
       width:'96%',
-      elevation:2,
+      elevation:4,
       padding:10,
-      alignSelf:'center'
+      alignSelf:'center',
+      backgroundColor:'#C3BEF0'
     },
     txtQuote: {
       fontSize: 20,
