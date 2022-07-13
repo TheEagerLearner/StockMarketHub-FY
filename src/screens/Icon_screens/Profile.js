@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet,AsyncStorage } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet,AsyncStorage,Image } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import {Card} from 'react-native-shadow-cards';
 import { auth,database } from '../../features/Firebase/firebase';
@@ -65,11 +65,22 @@ const Profile = ({navigation}) => {
         <View style={{
           width:'100%'
         }}>
-          <Text style={style.name}>{`Name ${name}`}</Text>
-          <Text style={style.name}>{`Email ${email}`}</Text>
+          <Text style={style.name}>{`Name: ${name}`}</Text>
+          <Text style={style.name}>{`Email: ${email}`}</Text>
           
 
         </View>
+
+        <Image 
+        style={{
+          width:400,
+          height:400,
+          alignSelf:'center',
+          marginTop:40
+        }}
+        
+        source={require('./../../../assets/hello.gif')}
+      />
 
       </View>
       <Button 
@@ -98,7 +109,8 @@ const style = StyleSheet.create({
       fontSize: 32,
       fontWeight: "bold",
       letterSpacing: 4,
-      marginTop:30
+      marginTop:30,
+      marginLeft:20
     },
     view1: {
       alignItems: "center",

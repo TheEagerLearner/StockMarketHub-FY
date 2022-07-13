@@ -1,5 +1,5 @@
 import React from 'react';
-import { View,StyleSheet,Text,FlatList,ToastAndroid,AsyncStorage } from 'react-native';
+import { View,StyleSheet,Text,FlatList,ToastAndroid,AsyncStorage,Image } from 'react-native';
 import WishCard from '../../components/WishCard';
 import { auth,database } from '../../features/Firebase/firebase';
 import StockApi from '../../features/StockApi/StockApi';
@@ -12,6 +12,7 @@ const Wishlist = ({navigation}) => {
   const [name,setName] = React.useState('user');
   const [inWish,setInWish] = React.useState(false);
   const [wishlist,setWishlist] = React.useState([]);
+  const [empty,setEmpty] = React.useState(true);
 
 
   
@@ -49,8 +50,16 @@ const Wishlist = ({navigation}) => {
                   var user=snapshot.val();
                   console.log(snapshot.val());
                   const wishlist = user.wishlist;
-                  setWishlist(wishlist);
-                  console.log(wishlist);
+                  if(typeof wishlist != "undefined")
+                  {
+                    setWishlist(wishlist);
+                    console.log(wishlist);
+                    setEmpty(false);
+                  }
+                  else{
+                    console.log('Wishlist does not exist');
+                    setEmpty(true);
+                  }
                   //console.log(wishlist.includes(res.toUpperCase()));
 
   
@@ -92,7 +101,24 @@ const Wishlist = ({navigation}) => {
     return(
         <View style={stylesheet.container}>
       <Text style={stylesheet.text}>Wishlist</Text>
-            <FlatList 
+      {
+        empty?
+        <View>
+        <Image 
+          style={{
+            marginTop:100
+          }}
+          source={require('./../../../assets/empty.gif')}
+        />
+        <Text
+          style={{
+            textAlign:'center',
+            fontWeight:'bold',
+            fontSize:28
+          }}
+        >Your wishlist is empty</Text>
+        </View>:
+        <FlatList 
                 style={{
                     width:'100%',
                     marginTop:40
@@ -118,6 +144,7 @@ const Wishlist = ({navigation}) => {
 
                 }}
             />
+      }
 
         </View>
     );

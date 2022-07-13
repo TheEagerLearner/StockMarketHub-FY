@@ -145,14 +145,16 @@ const stylesheet = StyleSheet.create({
     inside_container:{
         width:'100%',
         padding:10,
-        marginTop:50
+        marginTop:50,
     },
     textInput:{
-        borderWidth:1,
+        borderWidth:0,
         padding:12,
         borderRadius:10,
         marginHorizontal:16,
         marginVertical:12,
+        backgroundColor:'#fff',
+        elevation:8
     },
     btn_style:{
         marginHorizontal:12,

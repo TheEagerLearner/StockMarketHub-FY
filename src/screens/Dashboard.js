@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react';
-import {View,StyleSheet,Text,ToastAndroid, Linking} from 'react-native';
+import {View,StyleSheet,Text,ToastAndroid, Linking,KeyboardAvoidingView,KeyboardAvoidingViewComponent} from 'react-native';
 import { AsyncStorage } from 'react-native';
 import DashIcons from '../components/DashIcons';
 import SearchBar from '../components/SearchBar';
@@ -137,7 +137,7 @@ const Dashboard = ({navigation}) => {
          
 
     return(
-        <View style={stylesheet.container}>
+        <KeyboardAvoidingView style={stylesheet.container}>
               <Text style={stylesheet.greeting_text_one}>Hello👋</Text>
               <Text style={stylesheet.greeting_text_two}>{name}</Text>
           
@@ -183,7 +183,7 @@ const Dashboard = ({navigation}) => {
             <Text style={stylesheet.txtQuote}>{quote}</Text>
           
         </View>
-        </View>
+        </KeyboardAvoidingView>
     );
 }
 

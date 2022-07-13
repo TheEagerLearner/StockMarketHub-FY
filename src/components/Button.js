@@ -17,7 +17,8 @@ const stylesheet = StyleSheet.create({
     container:{
         backgroundColor:'#CCA8E9',
         padding:12,
-        borderRadius:12
+        borderRadius:12,
+        elevation:10
     },
     title_style:{
         textAlign:"center",

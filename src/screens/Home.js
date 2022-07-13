@@ -68,7 +68,7 @@ export default function Home() {
                   var wishlist = user.wishlist;
                   var username = user.username;
                   var email = user.email;
-                  setInWish(wishlist.includes(res.toUpperCase()));
+                  setInWish(wishlist.includes(res));
                   console.log(wishlist);
                   //console.log(wishlist.includes(res.toUpperCase()));
                   setName(user.username);

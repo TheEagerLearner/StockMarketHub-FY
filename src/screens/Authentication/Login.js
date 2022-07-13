@@ -119,11 +119,13 @@ const stylesheet = StyleSheet.create({
         marginTop:80
     },
     textInput:{
-        borderWidth:1,
+        borderWidth:0,
         padding:12,
         borderRadius:10,
         marginHorizontal:16,
         marginVertical:12,
+        backgroundColor:'#fff',
+        elevation:8
     },
     btn_style:{
         marginHorizontal:12,
