@@ -7,15 +7,18 @@ import "firebase/database";
 
 // app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAkCPdc9ESottu8gT3YxIfR2-0--1PKM38",
-  authDomain: "stockmarkethub-3541f.firebaseapp.com",
-  databaseURL: "https://stockmarkethub-3541f-default-rtdb.firebaseio.com",
-  projectId: "stockmarkethub-3541f",
-  storageBucket: "stockmarkethub-3541f.appspot.com",
-  messagingSenderId: "209749739743",
-  appId: "1:209749739743:web:ffbdfc56c146cfb426c16a",
-  databaseURL:"https://stockmarkethub-3541f-default-rtdb.firebaseio.com/"
+
+  apiKey: "AIzaSyBsyEekp9pb_G1qJ2EsPdOyQlIJJrjD-QY",
+  authDomain: "stock-market-hub.firebaseapp.com",
+  projectId: "stock-market-hub",
+  storageBucket: "stock-market-hub.appspot.com",
+  messagingSenderId: "291013685856",
+  appId: "1:291013685856:web:22d1f7612801ff0cf80905",
+  measurementId: "G-W9645C62DK",
+  databaseURL:"https://stock-market-hub-default-rtdb.firebaseio.com/"
+
 };
+
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
