@@ -271,11 +271,18 @@ const Analysis = ({navigation}) => {
                    
                 />
             </View>
+            <Text
+                style={{
+                    marginLeft:20,
+                    marginTop:10,
+                    marginBottom:10,
+                    fontWeight:'bold'
+                }}
+            >SUMMARY</Text>
             <View style={stylesheet.summary} >
-                <Text>According to our Technical Analysis Model</Text>
-                <Text>{`${lol.ml.pred} ${lol.ml.accuracy}`}</Text>
-                <Text>According to our News Analyzer</Text>
-                <Text>{`${lol.news.pred} `}</Text>
+                <Text>{`According to our technical Analyzer model it is suggested to ${lol.ml.pred} with an accuracy of ${lol.ml.accuracy}`}</Text>
+                <Text></Text>
+                <Text>{`According to our news Analyzer model it has suggested to ${lol.news.pred} `}</Text>
                 
             </View>
         </ScrollView>
@@ -299,7 +306,7 @@ const stylesheet = StyleSheet.create({
         width:Dimensions.get('window').width-30,
         alignSelf:'center',
         elevation:4,
-        margin:20,
+
         justifyContent:'center',
         alignItems:'center',
         backgroundColor:'#fff'

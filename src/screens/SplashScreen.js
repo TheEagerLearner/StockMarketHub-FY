@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,StyleSheet,Text} from 'react-native';
+import {View,StyleSheet,Text,Image } from 'react-native';
 import { AsyncStorage } from 'react-native';
 
 
@@ -38,7 +38,17 @@ const SplashScreen = ({navigation}) => {
 
     return(
         <View style={stylesheet.container}>
-            <Text>Splash Screen</Text>
+
+            <Image 
+                style={{
+
+                    alignSelf:'center',
+                    flex:1
+                    
+                }}
+                source={require('./../../assets/splash.png')} />
+
+
         </View>
     );
 }
@@ -46,8 +56,8 @@ const SplashScreen = ({navigation}) => {
 const stylesheet = StyleSheet.create({
     container:{
         flex:1,
-        justifyContent:'center',
-        alignItems:'center'
+        backgroundColor:'#fff',
+
     }
 });
 

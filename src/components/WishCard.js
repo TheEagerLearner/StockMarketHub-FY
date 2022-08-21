@@ -33,10 +33,10 @@ const stylesheet = StyleSheet.create({
         padding:10,
         paddingBottom:18,
         borderWidth:0,
-        borderRadius:20,
+        borderRadius:10,
         margin:10,
         //marginTop:100,
-        backgroundColor:'#7bd4fe',
+        backgroundColor:'#CCA8E9',
         shadowColor:'#A5a9ff',
         shadowOffset: {
             width: 0,
@@ -46,6 +46,7 @@ const stylesheet = StyleSheet.create({
         shadowRadius: 0,
         elevation: 24,
         width:'95%',
+        alignItems:'center'
     },
     nameStyle:{
         marginLeft:15,

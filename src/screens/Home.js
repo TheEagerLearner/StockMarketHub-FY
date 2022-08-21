@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import StockApi from '../features/StockApi/StockApi';
 import { Entypo } from '@expo/vector-icons';
+import { AntDesign } from "@expo/vector-icons";
 import { auth,database } from '../features/Firebase/firebase';
 
 
@@ -15,7 +16,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function Home() {
+export default function Home({navigation}) {
   
 
 
@@ -33,12 +34,17 @@ export default function Home() {
     });
 }
 
+        const getData = async (wishlist) => {
+          const name = await AsyncStorage.getItem('name');
+          const email = await AsyncStorage.getItem('email');
+          writeUserData(uid,name,email,wishlist);
+        }
 
         const writeUserData = (userId, name, email,wishlist) => {
           database.ref('users/' + userId).set({
-            username: name,
-            email: email,
-            wishlist:wishlist
+            'wishlist':wishlist,
+            'email':email,
+            'username':name
           });
           console.log({
             username: name,
@@ -60,8 +66,10 @@ export default function Home() {
                 if (snapshot.exists()) {
                   var user=snapshot.val();
                   console.log(snapshot.val());
-                  const wishlist = user.wishlist;
-                  setInWish(wishlist.includes(res.toUpperCase()));
+                  var wishlist = user.wishlist;
+                  var username = user.username;
+                  var email = user.email;
+                  setInWish(wishlist.includes(res));
                   console.log(wishlist);
                   //console.log(wishlist.includes(res.toUpperCase()));
                   setName(user.username);
@@ -107,6 +115,17 @@ export default function Home() {
   return (
     <View style={stylesheet.container}>
 
+<View style={stylesheet.appbar}>
+  <TouchableOpacity onPress={()=>{
+      navigation.goBack();
+  }}>
+                  <AntDesign
+                      name="arrowleft"
+                      size={30}
+                      color={true ? "black" : "white"}
+                      style={{ marginLeft: 10 }}
+                  />
+  </TouchableOpacity>
     <View style={stylesheet.header_tab}>
       <Text style={{
         fontSize:18,
@@ -117,12 +136,12 @@ export default function Home() {
         onPress={()=>{
           console.log("Tapped on Wishlist");
           if(inWish){
-            writeUserData(uid,name,email,arrayRemove(wishlist,ticker));
+            getData(arrayRemove(wishlist,ticker));
             setInWish(false);
           }
           else{
             
-            writeUserData(uid,name,email,[...wishlist,ticker]);
+            getData([...wishlist,ticker]);
             setInWish(true);
           }
 
@@ -133,6 +152,7 @@ export default function Home() {
         {inWish?<Entypo name="heart" size={28} color="red" />:<Entypo name="heart-outlined" size={28} color="red" />}
       </TouchableOpacity>
     </View>
+</View>
 
     <NavigationContainer independent={true}>
       <Tab.Navigator
@@ -153,17 +173,23 @@ export default function Home() {
 const stylesheet = StyleSheet.create({
   container:{
     flex:1,
-    paddingTop:20,
+    paddingTop:0,
     backgroundColor:'#FFF'
   
   },
   header_tab:{
-    padding:20,
-    paddingHorizontal:20,
+
     flexDirection:'row',
-    justifyContent:'flex-start'
+    justifyContent:'flex-end',
+    position:'absolute',
+    right:10
   },
   wishlist:{
     marginLeft:10
+  },
+  appbar:{
+    flexDirection:'row',
+    alignItems:'center',
+    paddingVertical:20,
   }
 });

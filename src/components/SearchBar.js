@@ -23,7 +23,9 @@ const stylesheet = StyleSheet.create({
         borderRadius:16,
         alignSelf:'center',
         marginTop:50,
-        borderWidth:1,
+        borderWidth:0,
+        backgroundColor:'white',
+        elevation:6
            
     
     },

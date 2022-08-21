@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View,StyleSheet, AsyncStorage,FlatList,Linking, ToastAndroid } from 'react-native';
+import { Text, View,StyleSheet, AsyncStorage,FlatList,Linking, ToastAndroid,Image } from 'react-native';
 import StockApi from '../../features/StockApi/StockApi';
 import NewsCard from '../../components/NewsCard';
 
@@ -80,13 +80,17 @@ const News = ({navigation}) => {
           }}
       />
       :
-      <Text 
-        style={{
-          position:'absolute',
-          alignSelf:'center',
-          textAlign:'center'
-        }}
-      >No News available for this stock</Text>
+          <Image 
+
+            style={{
+              width:320,
+              height:380,
+              position:'absolute',
+              alignSelf:'center',
+            }}
+            source={require('./../../../assets/noNews.png')}
+
+          />
 }
     </View>
   );
@@ -95,6 +99,7 @@ const News = ({navigation}) => {
 const stylesheet = StyleSheet.create({
   container:{
     flex:1,
+    justifyContent:'center'
     
   
   }

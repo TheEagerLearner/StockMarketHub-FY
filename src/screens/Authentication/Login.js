@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {View,StyleSheet,Text,TouchableOpacity,KeyboardAvoidingView,TextInput} from 'react-native';
+import {View,StyleSheet,Text,TouchableOpacity,KeyboardAvoidingView,TextInput,Image,ToastAndroid} from 'react-native';
 import Button from '../../components/Button';
 import { auth } from '../../features/Firebase/firebase';
 import { AsyncStorage } from 'react-native';
@@ -21,7 +21,7 @@ const Login = ({navigation}) => {
                 navigation.navigate('Dashboard');
             })
             .catch((error)=>{
-                console.log(error.message);
+                ToastAndroid.show(error.message,4000);
             });
     }
     
@@ -43,6 +43,18 @@ const Login = ({navigation}) => {
     
         return(
         <KeyboardAvoidingView style={stylesheet.container}>
+
+                <Image 
+                    style={{
+                        width:250,
+                        height:250,
+                        position:'absolute',
+                        top:50
+                        
+                    }}
+                    source={require('./../../../assets/lol.png')} 
+
+                />
             <View style={stylesheet.inside_container}>
                 
 
@@ -54,6 +66,7 @@ const Login = ({navigation}) => {
                     onChangeText={(text)=>{
                         setEmail(text);
                     }}
+                    autoCapitalize={"none"}
                 />
                 
                 <TextInput 
@@ -63,6 +76,7 @@ const Login = ({navigation}) => {
                         setPassword(text);
                     }}
                     secureTextEntry
+                    autoCapitalize={"none"}
                 />
                 
                 <Button 
@@ -98,18 +112,22 @@ const stylesheet = StyleSheet.create({
     container:{
         flex:1,
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        backgroundColor:'#fff'
     },
     inside_container:{
         width:'100%',
-        padding:10
+        padding:10,
+        marginTop:80
     },
     textInput:{
-        borderWidth:1,
+        borderWidth:0,
         padding:12,
         borderRadius:10,
         marginHorizontal:16,
         marginVertical:12,
+        backgroundColor:'#fff',
+        elevation:8
     },
     btn_style:{
         marginHorizontal:12,
