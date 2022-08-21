@@ -26,6 +26,15 @@ const About = ({navigation}) => {
   
       
       <ScrollView showsVerticalScrollIndicator={false}>
+        
+      <Image 
+          style={{
+            alignSelf:'center',
+            marginVertical:10
+          }}
+          source={require('./../../../assets/icon.png')}
+        />
+        
         <View style={style.info}>
             <Text style={style.text}>With regards to Indian stock exchanges, just a minority of individuals who 
             take care of their essentials and details appropriately put resources into the stock exchange while 
@@ -45,6 +54,8 @@ const About = ({navigation}) => {
         all the share related information they need.
           </Text>
         </View>
+
+
       </ScrollView>
     </View>
   )
@@ -68,7 +79,8 @@ const style = StyleSheet.create({
       textAlign:'center'
     },
     info: {
-      padding:10
+      padding:10,
+      paddingBottom:100
     }
     
 })

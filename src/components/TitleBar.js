@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity,StatusBar } from "react-native";
 import { Header } from "react-navigation-stack";
 import { AntDesign } from "@expo/vector-icons";
 //import { useHeaderHeight } from "react-navigation-stack";
@@ -39,12 +39,13 @@ const TitleBar = ({ title, onPress, lightTheme, style }) => {
 
 const stylesheet = StyleSheet.create({
     appBar: {
-        height: Header.HEIGHT, //-StatusBar.currentHeight,
+        height: Header.HEIGHT-StatusBar.currentHeight,
         //borderWidth:2,
         //marginTop:StatusBar.currentHeight,
         flexDirection: "row",
         justifyContent: "flex-start",
-        alignItems: "center"
+        alignItems: "center",
+        
     },
     titleStyle: {
         position: "absolute",
