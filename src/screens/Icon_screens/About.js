@@ -30,7 +30,9 @@ const About = ({navigation}) => {
       <Image 
           style={{
             alignSelf:'center',
-            marginVertical:10
+            marginVertical:10,
+            height:200,
+            width:200
           }}
           source={require('./../../../assets/icon.png')}
         />

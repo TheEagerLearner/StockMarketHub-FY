@@ -16,16 +16,24 @@ const Register = ({navigation}) => {
 
     //Realtime dB - Write
     const writeUserData = (userId, name, email,wishlist) => {
+  
+        
         database.ref('users/' + userId).set({
           username: name,
           email: email,
           wishlist:wishlist
         });
+    
       }
 
 
     //registers new users
     const RegisterUser =  () => {
+        if(name.length<3){
+            
+            ToastAndroid.show("Name should have more than 3 characters",4000);
+        }
+        else{
         auth.createUserWithEmailAndPassword(email,password)
             .then((userCred)=>{
                 var user = userCred.user;
@@ -39,7 +47,7 @@ const Register = ({navigation}) => {
                 var errorCode = error.code;
                 var errorMessage = error.message;
                 ToastAndroid.show(errorMessage,4000);
-            });
+            });}
     }
     
 

@@ -38,34 +38,17 @@ const SplashScreen = ({navigation}) => {
 
     return(
         <View style={stylesheet.container}>
-            <Text
-                style={{
-                    marginLeft:20,
-                    marginTop:60,
-                    fontWeight:'bold',
-                    fontSize:52,
-                    letterSpacing:4
-                }}
-            >Stock Market Hub</Text>
+
             <Image 
                 style={{
 
                     alignSelf:'center',
-                    marginTop:40
+                    flex:1
                     
                 }}
-                source={require('./../../assets/lol.png')} />
+                source={require('./../../assets/splash.png')} />
 
-                <Text
-                style={{
-                    marginLeft:20,
-                    marginTop:30,
-                    fontSize:32,
-                }}
-                >
-                Get all information about your stock portfolio at your fingertips
 
-                </Text>
         </View>
     );
 }
