@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react';
-import {View,StyleSheet,Text,ToastAndroid, Linking,KeyboardAvoidingView,KeyboardAvoidingViewComponent} from 'react-native';
+import {View,StyleSheet,Text,ToastAndroid, Alert,KeyboardAvoidingView,BackHandler,StatusBar} from 'react-native';
 import { AsyncStorage } from 'react-native';
 import DashIcons from '../components/DashIcons';
 import SearchBar from '../components/SearchBar';
@@ -133,6 +133,27 @@ const Dashboard = ({navigation}) => {
 
             
           },[setQuote]);
+
+          useEffect(() => {
+            const backAction = () => {
+              Alert.alert("Hold on!", "Are you sure you want to go back?", [
+                {
+                  text: "Cancel",
+                  onPress: () => null,
+                  style: "cancel"
+                },
+                { text: "YES", onPress: () => BackHandler.exitApp() }
+              ]);
+              return true;
+            };
+        
+            const backHandler = BackHandler.addEventListener(
+              "hardwareBackPress",
+              backAction
+            );
+        
+            return () => backHandler.remove();
+          }, []);
          
          
 
@@ -157,6 +178,9 @@ const Dashboard = ({navigation}) => {
           />
 
           <View style={stylesheet.icons_style}>
+
+          <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+
 
 
             <DashIcons 
@@ -190,9 +214,10 @@ const Dashboard = ({navigation}) => {
 const stylesheet = StyleSheet.create({
     container:{
         flex:1,
+        backgroundColor:'#fff'
     },
     greeting_text_one:{
-      marginTop:50,
+      marginTop:10,
       marginLeft:10,
       fontSize:50,
       fontWeight:'bold',

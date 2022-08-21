@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import StockApi from '../features/StockApi/StockApi';
 import { Entypo } from '@expo/vector-icons';
+import { AntDesign } from "@expo/vector-icons";
 import { auth,database } from '../features/Firebase/firebase';
 
 
@@ -15,7 +16,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function Home() {
+export default function Home({navigation}) {
   
 
 
@@ -114,6 +115,17 @@ export default function Home() {
   return (
     <View style={stylesheet.container}>
 
+<View style={stylesheet.appbar}>
+  <TouchableOpacity onPress={()=>{
+      navigation.goBack();
+  }}>
+                  <AntDesign
+                      name="arrowleft"
+                      size={30}
+                      color={true ? "black" : "white"}
+                      style={{ marginLeft: 10 }}
+                  />
+  </TouchableOpacity>
     <View style={stylesheet.header_tab}>
       <Text style={{
         fontSize:18,
@@ -140,6 +152,7 @@ export default function Home() {
         {inWish?<Entypo name="heart" size={28} color="red" />:<Entypo name="heart-outlined" size={28} color="red" />}
       </TouchableOpacity>
     </View>
+</View>
 
     <NavigationContainer independent={true}>
       <Tab.Navigator
@@ -160,17 +173,23 @@ export default function Home() {
 const stylesheet = StyleSheet.create({
   container:{
     flex:1,
-    paddingTop:20,
+    paddingTop:0,
     backgroundColor:'#FFF'
   
   },
   header_tab:{
-    padding:20,
-    paddingHorizontal:20,
+
     flexDirection:'row',
-    justifyContent:'flex-start'
+    justifyContent:'flex-end',
+    position:'absolute',
+    right:10
   },
   wishlist:{
     marginLeft:10
+  },
+  appbar:{
+    flexDirection:'row',
+    alignItems:'center',
+    paddingVertical:20,
   }
 });
