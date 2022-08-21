@@ -1,8 +1,9 @@
-import { View, Text, TouchableOpacity, StyleSheet,AsyncStorage,Image } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet,AsyncStorage,Image,StatusBar } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import {Card} from 'react-native-shadow-cards';
 import { auth,database } from '../../features/Firebase/firebase';
 import Button from '../../components/Button';
+import TitleBar from '../../components/TitleBar';
 
 const Profile = ({navigation}) => {
 
@@ -59,7 +60,23 @@ const Profile = ({navigation}) => {
   return (
     
     <View style={style.container}>
-      <Text style={style.txtProfile}>Profile 🙋‍♂️</Text>
+        
+        <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+
+
+        <TitleBar 
+            title="Profile 🙋‍♂️"
+            onPress={()=>{
+                navigation.goBack();
+            }}
+            lightTheme={true}
+            style={{
+                color:'#fff',
+               
+                
+            }}
+        />
+
       <View style={style.view1}>
 
         <View style={{

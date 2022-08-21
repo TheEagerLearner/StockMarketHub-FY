@@ -11,7 +11,7 @@ const About = ({navigation}) => {
 
 
         <TitleBar 
-            title="About Us"
+            title="About Us 🧐"
             onPress={()=>{
                 navigation.goBack();
             }}

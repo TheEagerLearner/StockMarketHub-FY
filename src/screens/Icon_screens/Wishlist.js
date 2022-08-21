@@ -1,9 +1,9 @@
 import React from 'react';
-import { View,StyleSheet,Text,FlatList,ToastAndroid,AsyncStorage,Image } from 'react-native';
+import { View,StyleSheet,Text,FlatList,ToastAndroid,AsyncStorage,Image,StatusBar } from 'react-native';
 import WishCard from '../../components/WishCard';
 import { auth,database } from '../../features/Firebase/firebase';
 import StockApi from '../../features/StockApi/StockApi';
-
+import TitleBar from '../../components/TitleBar';
 
 const Wishlist = ({navigation}) => {
 
@@ -100,7 +100,23 @@ const Wishlist = ({navigation}) => {
 
     return(
         <View style={stylesheet.container}>
-      <Text style={stylesheet.text}>Wishlist</Text>
+
+        <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+
+
+        <TitleBar 
+            title="Wishlist 😊"
+            onPress={()=>{
+                navigation.goBack();
+            }}
+            lightTheme={true}
+            style={{
+                color:'#fff',
+               
+                
+            }}
+        />
+
       {
         empty?
         <View>
@@ -153,7 +169,7 @@ const Wishlist = ({navigation}) => {
 const stylesheet = StyleSheet.create({
     container:{
         flex:1,
-        alignItems:'center'
+        backgroundColor:'#fff'
 
     },
     text: {

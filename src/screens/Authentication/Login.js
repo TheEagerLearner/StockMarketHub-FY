@@ -66,6 +66,7 @@ const Login = ({navigation}) => {
                     onChangeText={(text)=>{
                         setEmail(text);
                     }}
+                    autoCapitalize={"none"}
                 />
                 
                 <TextInput 
@@ -75,6 +76,7 @@ const Login = ({navigation}) => {
                         setPassword(text);
                     }}
                     secureTextEntry
+                    autoCapitalize={"none"}
                 />
                 
                 <Button 

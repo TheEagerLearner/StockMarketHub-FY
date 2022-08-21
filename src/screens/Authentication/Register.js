@@ -86,6 +86,7 @@ const Register = ({navigation}) => {
                     onChangeText={(text)=>{
                         setName(text);
                     }}
+                    autoCapitalize={"none"}
                 />
 
                 <TextInput 
@@ -95,6 +96,7 @@ const Register = ({navigation}) => {
                     onChangeText={(text)=>{
                         setEmail(text);
                     }}
+                    autoCapitalize={"none"}
                 />
                 
                 <TextInput 
@@ -104,6 +106,7 @@ const Register = ({navigation}) => {
                         setPassword(text);
                     }}
                     secureTextEntry
+                    autoCapitalize={"none"}
                 />
                 
                 <Button 
