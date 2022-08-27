@@ -1,12 +1,12 @@
 import React, { Profiler, useEffect, useState } from 'react';
 import { View,StyleSheet,Text, AsyncStorage,Dimensions,ScrollView  } from 'react-native';
 import StockApi from '../../features/StockApi/StockApi';
-
-
+import ProgressCircle from 'react-native-progress-circle'
 
 import {
     LineChart
   } from "react-native-chart-kit";
+import Percentage from '../../components/Percentage';
 
 
 const Analysis = ({navigation}) => {
@@ -279,19 +279,31 @@ const Analysis = ({navigation}) => {
                     fontWeight:'bold'
                 }}
             >SUMMARY</Text>
-            <View style={stylesheet.summary} >
-                <Text>{`According to our technical Analyzer model it is suggested to ${lol.ml.pred} with an accuracy of ${lol.ml.accuracy}`}</Text>
-                <Text></Text>
-                <Text>{`According to our news Analyzer model it has suggested to ${lol.news.pred} `}</Text>
+                <Percentage 
+                   
+                    text = {`According to our technical Analyzer model it is suggested to ${lol.ml.pred} with an accuracy of ${lol.ml.accuracy}`}
+                    percent = {lol.ml.accuracy}
+                />
                 
-            </View>
+                <Percentage 
+                  
+                    text ={`According to our news Analyzer model it has suggested to ${lol.news.pred} `}
+                    percent = {"100%"}
+                />
+                <View style={{
+                    paddingBottom:100
+                }}>
+
+                </View>
+                
+        
         </ScrollView>
     );
 }
 
 const stylesheet = StyleSheet.create({
     container:{
-     flex:1
+     flex:1,
     },
     graph:{
         paddingVertical:10,
@@ -300,19 +312,7 @@ const stylesheet = StyleSheet.create({
         margin:10,
         elevation:8,
     },
-    summary:{
-        padding:10,
-        borderWidth:0,
-        width:Dimensions.get('window').width-30,
-        alignSelf:'center',
-        elevation:4,
 
-        justifyContent:'center',
-        alignItems:'center',
-        backgroundColor:'#fff'
-
-
-    }
 });
 
 export default Analysis;
