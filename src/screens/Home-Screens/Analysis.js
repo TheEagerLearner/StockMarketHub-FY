@@ -68,16 +68,27 @@ const Analysis = ({navigation}) => {
             const newsPred =  (await StockApi.get(`/predict/senti/${res}`)).data.Prediction;
             const mlPred = response.Prediction;
             let accuracy = response.Accuracy;
+            let mlBuy = false;
+            let newsBuy = false;
+            if(mlPred==="buy"){
+                mlBuy = true;
+            }
+            if(newsPred ==="buy"){
+                newsBuy = true;
+            }
 
             const newpredData = {
                 "ml":{
                     "pred":mlPred,
-                    "accuracy":accuracy
+                    "accuracy":accuracy,
+                    "buy":mlBuy
                 },
                 "news":{
-                    "pred":newsPred
+                    "pred":newsPred,
+                    "buy":newsBuy
                 }
             }
+            console.log(newpredData);
             setLol(newpredData);
 
         }
@@ -280,13 +291,15 @@ const Analysis = ({navigation}) => {
                 }}
             >SUMMARY</Text>
                 <Percentage 
-                   
+                    buy = {lol.ml.buy}
+                    title = {`Technical Analyzer model prediction`}
                     text = {`According to our technical Analyzer model it is suggested to ${lol.ml.pred} with an accuracy of ${lol.ml.accuracy}`}
                     percent = {lol.ml.accuracy}
                 />
                 
                 <Percentage 
-                  
+                    buy = {lol.news.buy}
+                    title = {`Sentiment Analyzer model prediction`}
                     text ={`According to our news Analyzer model it has suggested to ${lol.news.pred} `}
                     percent = {"100%"}
                 />
