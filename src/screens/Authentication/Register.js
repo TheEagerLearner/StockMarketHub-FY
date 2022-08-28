@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import {View,StyleSheet,TextInput,KeyboardAvoidingView,TouchableOpacity,Text,Image,ToastAndroid} from 'react-native';
+import {View,StyleSheet,TextInput,KeyboardAvoidingView,TouchableOpacity,Text,Image,ToastAndroid,Keyboard} from 'react-native';
 import Button from '../../components/Button';
 import { AsyncStorage } from 'react-native';
 import { auth, database } from '../../features/Firebase/firebase';
+import Loader from '../../components/Loader';
 
 const Register = ({navigation}) => {
 
@@ -12,6 +13,7 @@ const Register = ({navigation}) => {
     const [name,setName] = useState('');
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
+    const [loader,setLoader] = useState(false);
 
 
     //Realtime dB - Write
@@ -34,6 +36,7 @@ const Register = ({navigation}) => {
             ToastAndroid.show("Name should have more than 3 characters",4000);
         }
         else{
+            setLoader(true);
         auth.createUserWithEmailAndPassword(email,password)
             .then((userCred)=>{
                 var user = userCred.user;
@@ -44,6 +47,7 @@ const Register = ({navigation}) => {
                 navigation.navigate('Dashboard');
             })
             .catch((error)=>{
+                setLoader(false);
                 var errorCode = error.code;
                 var errorMessage = error.message;
                 ToastAndroid.show(errorMessage,4000);
@@ -124,6 +128,7 @@ const Register = ({navigation}) => {
                     }}
                     title={'Register'}
                     onPress={()=>{
+                        Keyboard.dismiss();
                         console.log(name);
                         console.log(email);
                         console.log(password);
@@ -142,6 +147,13 @@ const Register = ({navigation}) => {
                 </TouchableOpacity>
 
             </View>
+            {loader?
+        <Loader 
+          link={require('./../../../assets/register_loader.gif')}
+          style={{
+            backgroundColor:'#F57C49'
+          }}
+        />:null}
         </KeyboardAvoidingView>
     );
 }

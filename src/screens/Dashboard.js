@@ -10,6 +10,7 @@ import StockApi from '../features/StockApi/StockApi';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import Loader from '../components/Loader';
 
 
 const Dashboard = ({navigation}) => {
@@ -40,17 +41,20 @@ const Dashboard = ({navigation}) => {
     const [uid,setUid] = useState('');
     const [name,setName] = useState('user');
     const [ticker,setTicker] = useState('');
+    const [loader,setLoader] = useState(false);
 
 
   const checkTicker = async () => {
       try{
-        const response = await StockApi.get(`/stock/${ticker}`);  
+        const response = await StockApi.get(`/stock/${ticker}`); 
         storeTicker();
         navigation.navigate('Home');
+        setLoader(false);
       }
       catch(err){
         
         console.log(err.message);
+        setLoader(false);
         ToastAndroid.show('Stock ticker does not exist',4000);
 
       }
@@ -134,27 +138,51 @@ const Dashboard = ({navigation}) => {
             
           },[setQuote]);
 
-          useEffect(() => {
-            const backAction = () => {
-              Alert.alert("Hold on!", "Are you sure you want to go back?", [
-                {
-                  text: "Cancel",
-                  onPress: () => null,
-                  style: "cancel"
-                },
-                { text: "YES", onPress: () => BackHandler.exitApp() }
-              ]);
-              return true;
-            };
+          // useEffect(() => {
+          //   const backAction = () => {
+          //     Alert.alert("Hold on!", "Are you sure you want to go back?", [
+          //       {
+          //         text: "Cancel",
+          //         onPress: () => null,
+          //         style: "cancel"
+          //       },
+          //       { text: "YES", onPress: () => BackHandler.exitApp() }
+          //     ]);
+          //     return true;
+          //   };
         
-            const backHandler = BackHandler.addEventListener(
-              "hardwareBackPress",
-              backAction
-            );
+          //   const backHandler = BackHandler.addEventListener(
+          //     "hardwareBackPress",
+          //     backAction
+          //   );
         
-            return () => backHandler.remove();
-          }, []);
-         
+          //   return () => backHandler.remove();
+          // }, []);
+          useEffect(
+            () =>
+              navigation.addListener('beforeRemove', (e) => {
+        
+                // Prevent default behavior of leaving the screen
+                e.preventDefault();
+        
+                // Prompt the user before leaving the screen
+                Alert.alert(
+                  'Leaving App ?',
+                  'Are you sure you want to leave the app ?',
+                  [
+                    { text: "Don't leave", style: 'cancel', onPress: () => {} },
+                    {
+                      text: 'Leave',
+                      style: 'destructive',
+                      // If the user confirmed, then we dispatch the action we blocked earlier
+                      // This will continue the action that had triggered the removal of the screen
+                      onPress: () => BackHandler.exitApp(),
+                    },
+                  ]
+                );
+              }),
+            [navigation]
+          );
          
 
     return(
@@ -170,6 +198,7 @@ const Dashboard = ({navigation}) => {
 
               onEndEditing={()=>{
                 console.log(`ticker is ${ticker}`);
+                setLoader(true); 
                 //Linking.openURL('https://google.com');
                 checkTicker();
                 
@@ -207,6 +236,13 @@ const Dashboard = ({navigation}) => {
             <Text style={stylesheet.txtQuote}>{quote}</Text>
           
         </View>
+        {loader?
+        <Loader 
+          link={require('./../../assets/loader.gif')}
+          style={{
+            backgroundColor:'#E1D3CA'
+          }}
+        />:null}
         </KeyboardAvoidingView>
     );
 }
@@ -238,13 +274,13 @@ const stylesheet = StyleSheet.create({
       elevation:4
     },
     quoteBg: { 
-      position: "absolute",
-      bottom: 100,
+      //position: "absolute",
+      marginTop:300,
       margin: 40,
       borderTopLeftRadius: 25,
       borderBottomRightRadius: 25,
       width:'96%',
-      elevation:4,
+      //elevation:4,
       padding:10,
       alignSelf:'center',
       backgroundColor:'#C3BEF0'

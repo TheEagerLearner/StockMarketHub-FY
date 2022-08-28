@@ -1,8 +1,9 @@
 import React,{useState,useEffect} from 'react';
-import {View,StyleSheet,Text,TouchableOpacity,KeyboardAvoidingView,TextInput,Image,ToastAndroid} from 'react-native';
+import {View,StyleSheet,Text,TouchableOpacity,KeyboardAvoidingView,TextInput,Image,ToastAndroid,Keyboard} from 'react-native';
 import Button from '../../components/Button';
 import { auth } from '../../features/Firebase/firebase';
 import { AsyncStorage } from 'react-native';
+import Loader from '../../components/Loader';
 
 const Login = ({navigation}) => {
 
@@ -10,9 +11,12 @@ const Login = ({navigation}) => {
     const [name,setName] = useState('');
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
+    
+    const [loader,setLoader] = useState(false);
 
     //logs in users
     const loginUser =  () =>{
+        setLoader(true);
         auth.signInWithEmailAndPassword(email,password)
             .then((userCred)=>{
                 var user = userCred.user;
@@ -21,6 +25,7 @@ const Login = ({navigation}) => {
                 navigation.navigate('Dashboard');
             })
             .catch((error)=>{
+                setLoader(false);
                 ToastAndroid.show(error.message,4000);
             });
     }
@@ -86,6 +91,7 @@ const Login = ({navigation}) => {
                     }}
                     title={'Login'}
                     onPress={()=>{
+                        Keyboard.dismiss();
                         console.log(name);
                         console.log(email);
                         console.log(password);
@@ -104,6 +110,13 @@ const Login = ({navigation}) => {
                 </TouchableOpacity>
                 
             </View>
+            {loader?
+        <Loader 
+          link={require('./../../../assets/login_loader.gif')}
+          style={{
+            backgroundColor:'#8EB5EE'
+          }}
+        />:null}
         </KeyboardAvoidingView>
     );
 }

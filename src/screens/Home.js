@@ -185,7 +185,8 @@ const stylesheet = StyleSheet.create({
     right:10
   },
   wishlist:{
-    marginLeft:10
+    marginLeft:10,
+    alignSelf:'center'
   },
   appbar:{
     flexDirection:'row',
