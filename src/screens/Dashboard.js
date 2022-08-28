@@ -236,7 +236,13 @@ const Dashboard = ({navigation}) => {
             <Text style={stylesheet.txtQuote}>{quote}</Text>
           
         </View>
-        {loader?<Loader />:null}
+        {loader?
+        <Loader 
+          link={require('./../../assets/loader.gif')}
+          style={{
+            backgroundColor:'#E1D3CA'
+          }}
+        />:null}
         </KeyboardAvoidingView>
     );
 }
