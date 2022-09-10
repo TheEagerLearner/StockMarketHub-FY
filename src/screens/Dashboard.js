@@ -187,7 +187,7 @@ const Dashboard = ({navigation}) => {
 
     return(
         <KeyboardAvoidingView style={stylesheet.container}>
-              <Text style={stylesheet.greeting_text_one}>Hello👋</Text>
+              <Text style={stylesheet.greeting_text_one}>Hellooo👋</Text>
               <Text style={stylesheet.greeting_text_two}>{name}</Text>
           
           <SearchBar 
